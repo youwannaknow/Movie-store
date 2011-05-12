@@ -1,0 +1,118 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Online DVD sales and rentals store</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<%= stylesheet_link_tag "scaffold" %>
+<%= stylesheet_link_tag "depot", :media => "all" %>
+<%= javascript_include_tag :defaults %>
+<%= csrf_meta_tag %>
+</head>
+
+
+<body>
+  <div id="wrapper">
+      <div id="inner">
+
+
+
+
+
+
+
+
+
+  <div id="header">
+              <h1><img src="images/logo.gif" width="519" height="63" alt="Online Movie Store" /></h1>
+              <div id="nav">
+                  <a href="http://www.ensocon.com">your account</a> | <a href="http://www.ensocon.com">view cart</a> | <a href="http://www.ensocon.com">help</a>
+              </div><!-- end nav -->
+              <a href="http://www.ensocon.com"><img src="images/header_1.jpg" width="744" height="145" alt="Harry Potter cd" /></a>
+              <a href="http://www.ensocon.com"><img src="images/header_2.jpg" width="744" height="48" alt="" /></a>
+          </div><!-- end header -->
+
+
+
+		  
+		  
+<div id="browse">
+<dl>
+              <dt>Movie Category </dt>
+              <dd class="first"><%= link_to 'Home', store_path %> </dd>
+              <dd><a href="http://localhost:3000/users/new" >New user</a></dd>
+              <dd><%= link_to 'Movies', movies_path %></a></dd>
+            <dd><%= link_to 'Login', login_path %></dd>
+              <dd><a href="#" >Comedy</a></dd>
+              <dd><a href="#" >Cult Movies</a></dd>
+              <dd><a href="#" >Drama</a></dd>
+              <dd><a href="#" >New &amp; Future Releases</a></dd>
+              <dd><a href="#" >Horror</a></dd>
+              <dd><a href="#" >Musicals</a></dd>
+              <dd><a href="#" >Mystery &amp; Suspense</a></dd>
+            <dd><a href="http://localhost:3000/login#" >Science Fiction &amp; Fantasy</a></dd>
+             
+			  
+			  <% if session[:user_id] %>
+				
+				<dd> <%= link_to 'Orders', orders_path %> </dd>
+				<dd> <%= link_to 'movies', movies_path %> </dd>
+				<dd> <%= link_to 'Users', users_path %> <br />
+				
+				<dd> <%= button_to 'Logout', logout_path, :method => :delete %> </dd>
+				<% end %>
+			
+			
+			
+              
+            <dt>Search Your Favourite Movie</dt>
+              <dd class="searchform">
+                <form action="?" method="get">
+                    <div><select name="cat">
+                        <option value="-" selected="selected">CATEGORIES</option>
+                        <option value="-">------------</option>
+                    </select></div>
+                    <div><input name="q" type="text" value="DVD TITLE" class="text" /></div>
+                    <div class="softright"><input type="image" src="images/btn_search.gif" /></div>
+                </form>
+              </dd>
+          </dl>
+		  </div>
+         		
+<div id="body">
+              <div class="inner">
+			 
+ <% if @cart %>
+<%= hidden_div_if(@cart.line_items.empty?, :id => "cart") do %>
+<%= render @cart %>
+<% end %>
+<% end %>
+
+
+
+
+
+
+<div id="main" >
+<%= yield %>
+</div>
+</div>
+
+
+</div>
+</div>
+
+<div class="clear"></div>
+          <div id="footer">
+              Web design by <a href="http://www.ensocon.com">Pierre &amp; Victor</a>
+              
+              &nbsp;
+              <div id="footnav">
+                  Copyriright @2011, All Rights Reserved | <a href="http://www.ensocon.com">Privacy Policy</a> </div>
+            <!-- end footnav -->
+              
+          </div><!-- end footer -->
+      </div><!-- end inner -->
+  </div><!-- end wrapper -->
+</body>
+</html>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  description: MyText
+  image_url: MyString
+  year_of_release: 2011-05-11
+  movie_type: MyString
+  price: 9.99
+  actor: MyString
+  category: MyString
+
+two:
+  title: MyString
+  description: MyText
+  image_url: MyString
+  year_of_release: 2011-05-11
+  movie_type: MyString
+  price: 9.99
+  actor: MyString
+  category: MyString
