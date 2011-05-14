@@ -1,5 +1,6 @@
 class LineItemsController < ApplicationController
-skip_before_filter :authorize, :only => :create
+  skip_before_filter :authorize, :only => :create
+  
   # GET /line_items
   # GET /line_items.xml
   def index
@@ -40,14 +41,35 @@ skip_before_filter :authorize, :only => :create
 
   # POST /line_items
   # POST /line_items.xml
+  #def create
+    #@line_item = LineItem.new(params[:line_item])
+    #@cart = current_cart
+    #movie = Movie.find(params[:movie_id])
+    #@line_item = @cart.add_movie(movie.id)
+    #@line_item = @cart.line_items.build(:movie => movie)
+    
+    #respond_to do |format|
+      #if @line_item.save
+        #format.html { redirect_to(@line_item, :notice => 'Line item was successfully created.') }
+	#format.html { redirect_to(@line_item.cart, :notice => 'Line item was successfully created.') }
+        #format.html { redirect_to(store_url) }
+	#format.js	{ @current_item = @line_item }
+	#format.xml  { render :xml => @line_item, :status => :created, :location => @line_item }
+      #else
+        #format.html { render :action => "new" }
+        #format.xml  { render :xml => @line_item.errors, :status => :unprocessable_entity }
+      #end
+    #end
+  #end
+  
 def create
 @cart = current_cart
 movie = Movie.find(params[:movie_id])
-@line_item = @cart.line_items.build(:movie => movie)
+@line_item = @cart.add_movie(movie.id)
 respond_to do |format|
 if @line_item.save
-format.html { redirect_to(@line_item.cart,
-:notice => 'Line item was successfully created.') }
+format.html { redirect_to(store_url) }
+format.js { @current_item = @line_item }
 format.xml { render :xml => @line_item,
 :status => :created, :location => @line_item }
 else

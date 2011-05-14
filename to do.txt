@@ -1,0 +1,37 @@
+index.html.rb---------->line 21 to format currency
+
+validates :image_url, :format => {
+	:with		=> %r{\.(gif|jpg|png)$}i,
+	:message	=> 'Must be a URL for GIF, JPG or PNG image.'
+	
+	photo_1.jpg
+	
+//	orders_controller.rb
+	 def create
+    @order = Order.new(params[:order])
+
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to(@order, :notice => 'Order was successfully created.') }
+        format.xml  { render :xml => @order, :status => :created, :location => @order }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @order.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  
+// Cannot create order
+
+// application .html.erb
+
+			 
+ <% if @cart %>
+<%= hidden_div_if(@cart.line_items.empty?, :id => "cart") do %>
+<%= render @cart %>
+<% end %>
+<% end %>
+
+
+-------------------------------------------

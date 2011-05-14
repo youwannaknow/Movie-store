@@ -1,15 +1,29 @@
 <% if notice %>
+
 <p id="notice" ><%= notice %></p>
+
 <% end %>
+
 <h1>Our Movie Catalog</h1>
+
 <% @movies.each do |movie| %>
+
 <div class="entry" >
+
 <%= image_tag(movie.image_url) %>
+
 <h3><%= movie.title %></h3>
+
 <%=sanitize movie.description %>
+
 <div class="price_line" >
-<span class="price" ><%= movie.price %></span>
+
+<span class="price" ><%= sprintf("R%0.02f", movie.price) %></span>
+
 <%= button_to 'Add to Cart', line_items_path(:movie_id => movie) %>
+
 </div>
+
 </div>
+
 <% end %>

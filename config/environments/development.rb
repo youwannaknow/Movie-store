@@ -29,8 +29,8 @@ config.action_mailer.smtp_settings = {
 :port => 587,
 :domain => "domain.of.sender.net",
 :authentication => "plain",
-:user_name => "dave",
-:password => "secret",
+:user_name => "p.noubissie",
+:password => "iloveyou1980",
 :enable_starttls_auto => true
 }
 end

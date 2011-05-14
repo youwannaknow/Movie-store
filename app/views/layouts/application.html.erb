@@ -24,12 +24,12 @@
 
 
   <div id="header">
-              <h1><img src="images/logo.gif" width="519" height="63" alt="Online Movie Store" /></h1>
+              <h1><%=image_tag("logo.gif")%></h1>
               <div id="nav">
                   <a href="http://www.ensocon.com">your account</a> | <a href="http://www.ensocon.com">view cart</a> | <a href="http://www.ensocon.com">help</a>
               </div><!-- end nav -->
-              <a href="http://www.ensocon.com"><img src="images/header_1.jpg" width="744" height="145" alt="Harry Potter cd" /></a>
-              <a href="http://www.ensocon.com"><img src="images/header_2.jpg" width="744" height="48" alt="" /></a>
+              <a href="http://www.ensocon.com"><%=image_tag("header_1.jpg")%></a>
+              <a href="http://www.ensocon.com"><%=image_tag("header_2.jpg")%></a>
           </div><!-- end header -->
 
 
@@ -40,7 +40,7 @@
 <dl>
               <dt>Movie Category </dt>
               <dd class="first"><%= link_to 'Home', store_path %> </dd>
-              <dd><a href="http://localhost:3000/users/new" >New user</a></dd>
+              <dd><%= link_to 'Users', users_path %></dd>
               <dd><%= link_to 'Movies', movies_path %></a></dd>
             <dd><%= link_to 'Login', login_path %></dd>
               <dd><a href="#" >Comedy</a></dd>
@@ -50,7 +50,7 @@
               <dd><a href="#" >Horror</a></dd>
               <dd><a href="#" >Musicals</a></dd>
               <dd><a href="#" >Mystery &amp; Suspense</a></dd>
-            <dd><a href="http://localhost:3000/login#" >Science Fiction &amp; Fantasy</a></dd>
+            <dd><a href="http://localhost:3000/login" >Science Fiction &amp; Fantasy</a></dd>
              
 			  
 			  <% if session[:user_id] %>
@@ -69,8 +69,11 @@
               <dd class="searchform">
                 <form action="?" method="get">
                     <div><select name="cat">
-                        <option value="-" selected="selected">CATEGORIES</option>
-                        <option value="-">------------</option>
+                        <option value="-" selected="selected">Actors</option>
+                        <option value="">Angelina jolie</option>
+						<option value="">Sandra Bullock</option>
+						<option value="">Steven Seagal</option>						
+						<option value="">Tom Cruise</option>
                     </select></div>
                     <div><input name="q" type="text" value="DVD TITLE" class="text" /></div>
                     <div class="softright"><input type="image" src="images/btn_search.gif" /></div>
@@ -82,12 +85,6 @@
 <div id="body">
               <div class="inner">
 			 
- <% if @cart %>
-<%= hidden_div_if(@cart.line_items.empty?, :id => "cart") do %>
-<%= render @cart %>
-<% end %>
-<% end %>
-
 
 
 

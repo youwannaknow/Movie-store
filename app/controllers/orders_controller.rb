@@ -1,15 +1,25 @@
 class OrdersController < ApplicationController
-skip_before_filter :authorize, :only => [:new, :create]
+  skip_before_filter :authorize, :only => [:new, :create]
+  
   # GET /orders
   # GET /orders.xml
-  def index
-    @orders = Order.all
+  #def index
+    #@orders = Order.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @orders }
-    end
-  end
+    #respond_to do |format|
+      #format.html # index.html.erb
+      #format.xml  { render :xml => @orders }
+    #end
+  #end
+  
+  def index
+@orders = Order.paginate :page=>params[:page], :order=>'created_at desc', :per_page => 10
+
+respond_to do |format|
+format.html # index.html.erb
+format.xml { render :xml => @orders }
+end
+end
 
   # GET /orders/1
   # GET /orders/1.xml
@@ -25,6 +35,10 @@ skip_before_filter :authorize, :only => [:new, :create]
   # GET /orders/new
   # GET /orders/new.xml
   def new
+  if current_cart.line_items.empty?
+  redirect_to store_url, :notice => "Your cart is empty"
+  return
+  end
     @order = Order.new
 
     respond_to do |format|
@@ -40,19 +54,58 @@ skip_before_filter :authorize, :only => [:new, :create]
 
   # POST /orders
   # POST /orders.xml
-  def create
-    @order = Order.new(params[:order])
+  #def create
+    #@order = Order.new(params[:order])
 
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to(@order, :notice => 'Order was successfully created.') }
-        format.xml  { render :xml => @order, :status => :created, :location => @order }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @order.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+    #respond_to do |format|
+      #if @order.save
+        #format.html { redirect_to(@order, :notice => 'Order was successfully created.') }
+        #format.xml  { render :xml => @order, :status => :created, :location => @order }
+      #else
+        #format.html { render :action => "new" }
+        #format.xml  { render :xml => @order.errors, :status => :unprocessable_entity }
+      #end
+    #end
+  #end
+  
+ #def create
+#@order = Order.new(params[:order])
+#@order.add_line_items_from_cart(current_cart)
+#respond_to do |format|
+#if @order.save
+#Cart.destroy(session[:cart_id])
+#session[:cart_id] = nil
+#format.html { redirect_to(store_url, :notice =>
+#'Thank you for your order.') }
+#format.xml { render :xml => @order, :status => :created,
+#:location => @order }
+#else
+#format.html { render :action => "new" }
+#format.xml { render :xml => @order.errors,
+#:status => :unprocessable_entity }
+#end
+#end
+#end
+
+def create
+@order = Order.new(params[:order])
+@order.add_line_items_from_cart(current_cart)
+respond_to do |format|
+if @order.save
+Cart.destroy(session[:cart_id])
+session[:cart_id] = nil
+Notifier.order_received(@order).deliver
+format.html { redirect_to(store_url, :notice =>
+I18n.t('.thanks'))}
+format.xml { render :xml => @order, :status => :created,
+:location => @order }
+else
+format.html { render :action => "new" }
+format.xml { render :xml => @order.errors,
+:status => :unprocessable_entity }
+end
+end
+end
 
   # PUT /orders/1
   # PUT /orders/1.xml
